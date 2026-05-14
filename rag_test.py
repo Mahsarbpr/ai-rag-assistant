@@ -2,7 +2,7 @@
 from load_text_pdf_documents import load_documents
 from text_splitter import split_documents
 from vector_creator import create_vectorstore
-from rag_service import find_answer_to_question
+from rag_service import find_answer_to_question, print_answer_and_sources
 from config import DATA_FOLDER
 
 def main() -> None:
@@ -20,20 +20,8 @@ def main() -> None:
     # 5. Get answer and sources
     result = find_answer_to_question(vectorstore, question)
 
-    print("\n--- Answer ---")
-    print(result["answer"])
-
-    print("\n--- Sources ---")
-    for source in result["sources"]:
-        print(source)
-    
-    
-
-
-    
-
-    
-    
+    # 6. Print answer and sources
+    print_answer_and_sources(result)
 
 if __name__ == "__main__":
     main()
