@@ -7,3 +7,4 @@ CHUNK_OVERLAP = 100
 TOP_K = 3
 
 FAISS_INDEX_PATH = "faiss_index"
+INDEX_METADATA_PATH = "faiss_index/index_metadata.json"
