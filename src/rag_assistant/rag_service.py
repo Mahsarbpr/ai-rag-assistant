@@ -1,7 +1,7 @@
 from langchain_core.documents import Document
 from langchain_community.vectorstores import FAISS
 from langchain_ollama import OllamaLLM
-from config import LLM_MODEL, TOP_K
+from rag_assistant.config import LLM_MODEL, TOP_K
 
 # RAG Service: Retrieve relevant documents, build context, and generate answer
 

@@ -1,5 +1,5 @@
-from rag_pipeline import RAGPipeline
-from display import print_answer_and_sources
+from src.rag_assistant.rag_pipeline import RAGPipeline
+from src.rag_assistant.display import print_answer_and_sources
 
 def main() -> None:
 

@@ -1,6 +1,6 @@
 from langchain_core.documents import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from config import CHUNK_SIZE, CHUNK_OVERLAP
+from rag_assistant.config import CHUNK_SIZE, CHUNK_OVERLAP
 
 # Text Splitter: Split documents into smaller chunks for better retrieval and context building
 def split_documents(

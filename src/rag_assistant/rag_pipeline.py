@@ -1,11 +1,11 @@
 
-from load_text_pdf_documents import load_documents
-from text_splitter import split_documents
-from vector_store import create_vectorstore, save_vectorstore, load_vectorstore
-from rag_service import find_answer_to_question
-from config import DATA_FOLDER, LLM_MODEL, FAISS_INDEX_PATH, INDEX_METADATA_PATH
+from rag_assistant.load_text_pdf_documents import load_documents
+from rag_assistant.text_splitter import split_documents
+from rag_assistant.vector_store import create_vectorstore, save_vectorstore, load_vectorstore
+from rag_assistant.rag_service import find_answer_to_question
+from rag_assistant.config import DATA_FOLDER, LLM_MODEL, FAISS_INDEX_PATH, INDEX_METADATA_PATH
 from langchain_ollama import OllamaLLM
-from index_metadata import (
+from rag_assistant.index_metadata import (
     calculate_data_fingerprint,
     save_fingerprint,
     data_changed,
