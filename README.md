@@ -19,6 +19,8 @@ The system loads PDF/TXT documents, chunks them, creates embeddings, stores them
 - Automatic document change detection
 - FastAPI backend
 - Swagger API documentation
+- Professional `src/` package structure
+- Unit testing support with pytest
 
 ---
 
@@ -34,6 +36,7 @@ The system loads PDF/TXT documents, chunks them, creates embeddings, stores them
 | Pydantic              | Request/response validation |
 | Sentence Transformers | Embedding generation        |
 | PyPDF                 | PDF parsing                 |
+| Pytest                | Unit testing                |
 
 ---
 
@@ -42,44 +45,68 @@ The system loads PDF/TXT documents, chunks them, creates embeddings, stores them
 ```text
 ai-rag-assistant/
 │
+├── src/
+│   └── rag_assistant/
+│       ├── __init__.py
+│       ├── config.py
+│       ├── display.py
+│       ├── document_loader.py
+│       ├── index_metadata.py
+│       ├── rag_pipeline.py
+│       ├── rag_service.py
+│       ├── text_splitter.py
+│       └── vector_store.py
+│
 ├── api/
 │   ├── __init__.py
 │   └── app.py
 │
-├── data/
+├── tests/
+│   └── test_index_metadata.py
 │
+├── data/
 ├── faiss_index/
 │
-├── config.py
-├── display.py
-├── index_metadata.py
-├── load_text_pdf_documents.py
 ├── main.py
-├── rag_pipeline.py
-├── rag_service.py
-├── text_splitter.py
-├── vector_store.py
-│
+├── pyproject.toml
 ├── requirements.txt
 └── README.md
 ```
 
 ---
 
+# Package Architecture
+
+The project uses a `src/`-based Python package layout to support:
+
+- clean package imports
+- scalable project organization
+- editable package installation
+- professional Python project structure
+- improved test isolation
+
+Example imports:
+
+```python
+from rag_assistant.rag_pipeline import RAGPipeline
+```
+
+---
+
 # Low-Level Design
 
-| Component                    | Responsibility                                                  |
-| ---------------------------- | --------------------------------------------------------------- |
-| `main.py`                    | CLI entry point for local testing                               |
-| `api/app.py`                 | FastAPI backend exposing `/ask` endpoint                        |
-| `rag_pipeline.py`            | High-level orchestrator/facade for the RAG workflow             |
-| `load_text_pdf_documents.py` | Loads `.pdf` and `.txt` files into LangChain `Document` objects |
-| `text_splitter.py`           | Splits documents into smaller chunks                            |
-| `vector_store.py`            | Creates, saves, loads, and searches FAISS vector store          |
-| `rag_service.py`             | Builds context, prompt, retrieves docs, and generates answer    |
-| `index_metadata.py`          | Detects document changes using file hashes                      |
-| `display.py`                 | CLI output formatting                                           |
-| `config.py`                  | Central configuration values                                    |
+| Component            | Responsibility                                                  |
+| -------------------- | --------------------------------------------------------------- |
+| `main.py`            | CLI entry point for local testing                               |
+| `api/app.py`         | FastAPI backend exposing `/ask` endpoint                        |
+| `rag_pipeline.py`    | High-level orchestrator/facade for the RAG workflow             |
+| `document_loader.py` | Loads `.pdf` and `.txt` files into LangChain `Document` objects |
+| `text_splitter.py`   | Splits documents into smaller chunks                            |
+| `vector_store.py`    | Creates, saves, loads, and searches FAISS vector store          |
+| `rag_service.py`     | Builds context, prompt, retrieves docs, and generates answer    |
+| `index_metadata.py`  | Detects document changes using file hashes                      |
+| `display.py`         | CLI output formatting                                           |
+| `config.py`          | Central configuration values                                    |
 
 ---
 
@@ -87,7 +114,7 @@ ai-rag-assistant/
 
 ```mermaid
 flowchart TD
-    A[PDF/TXT Files in data folder] --> B[load_text_pdf_documents.py]
+    A[PDF/TXT Files in data folder] --> B[document_loader.py]
     B --> C[LangChain Documents]
     C --> D[text_splitter.py]
     D --> E[Document Chunks]
@@ -189,6 +216,8 @@ Response:
 python -m venv .venv
 ```
 
+---
+
 ## 2. Activate environment
 
 ### Windows
@@ -203,11 +232,23 @@ python -m venv .venv
 source .venv/bin/activate
 ```
 
+---
+
 ## 3. Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
+
+---
+
+## 4. Install package in editable mode
+
+```bash
+pip install -e .
+```
+
+This installs the project as a local Python package and enables package-based imports.
 
 ---
 
@@ -247,6 +288,22 @@ python main.py
 
 ---
 
+# Running Tests
+
+Install pytest:
+
+```bash
+pip install pytest
+```
+
+Run tests:
+
+```bash
+pytest
+```
+
+---
+
 # Current Design Principles
 
 - Separation of concerns between loading, splitting, vector storage, RAG logic, API, and display
@@ -254,6 +311,7 @@ python main.py
 - FAISS persistence to avoid rebuilding embeddings every run
 - Document hash metadata to rebuild the index only when source files change
 - FastAPI layer wraps the RAG pipeline without mixing API logic into core RAG logic
+- Installable Python package architecture using `pyproject.toml`
 
 ---
 
