@@ -1,7 +1,7 @@
 
 from load_text_pdf_documents import load_documents
 from text_splitter import split_documents
-from vector_creator import create_vectorstore, save_vectorstore, load_vectorstore
+from vector_store import create_vectorstore, save_vectorstore, load_vectorstore
 from rag_service import find_answer_to_question
 from config import DATA_FOLDER, LLM_MODEL, FAISS_INDEX_PATH, INDEX_METADATA_PATH
 from langchain_ollama import OllamaLLM
