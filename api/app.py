@@ -14,18 +14,23 @@ rag.load_or_build_vectorstore()
 class QuestionRequest(BaseModel):
     question: str
 
+# Define response model for answers with sources
+class QuestionResponse(BaseModel):
+    answer: str
+    sources: list
+
 # Define API endpoints
 @app.get("/")
 def root():
     return {"message": "RAG API is running"}
 
 # Endpoint to ask a question and get an answer with sources
-@app.post("/ask")
+@app.post("/ask", response_model=QuestionResponse)
 def ask_question(request: QuestionRequest):
 
     result = rag.ask_question(request.question)
 
-    return {
-        "answer": result["answer"],
-        "sources": result["sources"],
-    }
+    return QuestionResponse(
+        answer=result["answer"],
+        sources=result["sources"],
+    )
